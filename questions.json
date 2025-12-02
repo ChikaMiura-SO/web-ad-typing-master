@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "term": "リスティング広告",
+        "roman": "risuthingukoukoku",
+        "explanation": "検索エンジンの結果ページ上部に表示される広告。PPC広告の一種。",
+        "category": "ad_term",
+        "level": 1
+    },
+    {
+        "id": 2,
+        "term": "インプレッション",
+        "roman": "innpuressyonn",
+        "explanation": "広告が表示された回数を示す指標。広告が表示された回数を示す指標。",
+        "category": "ad_term",
+        "level": 1
+    },
+    {
+        "id": 3,
+        "term": "コンバージョン",
+        "roman": "konnba-zyonn",
+        "explanation": "Webサイトにおける最終的な成果（購入、資料請求など）のこと。",
+        "category": "ad_term",
+        "level": 1
+    },
+    {
+        "id": 4,
+        "term": "CPA",
+        "roman": "cpa",
+        "explanation": "顧客獲得単価（Cost Per Acquisition）。1件のコンバージョンを得るためにかかった費用。",
+        "category": "ad_term",
+        "level": 1
+    },
+    {
+        "id": 5,
+        "term": "LTV",
+        "roman": "ltv",
+        "explanation": "顧客生涯価値（Life Time Value）。顧客が取引開始から終了までに企業にもたらす利益の総額。",
+        "category": "ad_term",
+        "level": 1
+    },
+    {
+        "id": 6,
+        "term": "バナー広告",
+        "roman": "bana-koukoku",
+        "explanation": "Webサイト上の決められた枠に画像や動画で表示される広告。",
+        "category": "ad_term",
+        "level": 1
+    },
+    {
+        "id": 7,
+        "term": "クリック数",
+        "roman": "kurikkusuu",
+        "explanation": "広告がクリックされた回数。",
+        "category": "ad_term",
+        "level": 1
+    },
+    {
+        "id": 8,
+        "term": "フリークエンシー",
+        "roman": "furi-kuennshi-",
+        "explanation": "1人のユーザーが広告を見た平均回数。",
+        "category": "ad_term",
+        "level": 1
+    },
+    {
+        "id": 9,
+        "term": "インプレッションシェア",
+        "roman": "innpuressyonnsyea",
+        "explanation": "競合を含めた広告枠の中で自社広告が表示された割合。",
+        "category": "ad_term",
+        "level": 1
+    },
+    {
+        "id": 10,
+        "term": "品質スコア",
+        "roman": "hinsitusukoa",
+        "explanation": "Google広告で広告やLPの品質を示すスコア。",
+        "category": "ad_term",
+        "level": 1
+    }
+]
