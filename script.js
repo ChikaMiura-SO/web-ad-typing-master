@@ -31,7 +31,24 @@ const timeProgressBar = document.getElementById('time-progress');
 const reviewList = document.getElementById('review-list');
 const typingArea = document.querySelector('.typing-area');
 
-// Audio (Optional - using simple Web Audio API for beeps if needed, but keeping it silent/visual for now as per plan)
+// Audio
+const sounds = {
+    tap: new Audio('sounds/typing_tap.mp3'),
+    miss: new Audio('sounds/miss_sound.mp3'),
+    complete: new Audio('sounds/word_complete.mp3'),
+    finish: new Audio('sounds/game_finish.mp3')
+};
+
+// Preload sounds
+Object.values(sounds).forEach(sound => sound.load());
+
+function playSound(type) {
+    const sound = sounds[type];
+    if (sound) {
+        sound.currentTime = 0; // Reset to start for rapid playback
+        sound.play().catch(e => console.log('Sound play failed:', e));
+    }
+}
 
 // Event Listeners
 startBtn.addEventListener('click', startGame);
@@ -166,18 +183,29 @@ function handleInput(e) {
 
     if (e.key.toLowerCase() === targetChar) {
         // Correct
+        playSound('tap');
         keyStats[targetChar].correct++;
         charIndex++;
         score += 10;
         scoreDisplay.textContent = score;
 
+        // Score Flash Animation
+        scoreDisplay.classList.remove('score-flash');
+        void scoreDisplay.offsetWidth; // Trigger reflow
+        scoreDisplay.classList.add('score-flash');
+
         if (charIndex >= currentTerm.roman.length) {
             // Word complete
+            playSound('complete');
             score += 50; // Bonus for finishing word
             scoreDisplay.textContent = score;
             currentTermIndex++;
 
             // Visual flair for word complete
+            typingArea.classList.remove('area-flash');
+            void typingArea.offsetWidth; // Trigger reflow
+            typingArea.classList.add('area-flash');
+
             typingArea.style.borderColor = '#3b82f6';
             setTimeout(() => typingArea.style.borderColor = 'rgba(255, 255, 255, 0.1)', 200);
 
@@ -187,6 +215,7 @@ function handleInput(e) {
         }
     } else {
         // Incorrect
+        playSound('miss');
         keyStats[targetChar].miss++;
         typingArea.classList.add('shake');
         typingArea.style.borderColor = '#ef4444';
@@ -198,6 +227,7 @@ function handleInput(e) {
 }
 
 function endGame() {
+    playSound('finish');
     isPlaying = false;
     clearInterval(timerInterval);
 

@@ -212,19 +212,56 @@ body {
 }
 
 .char-correct {
-    color: var(--primary-color);
-    text-shadow: 0 0 10px var(--primary-glow);
+    color: #16a34a;
+    /* Darker green */
+    text-shadow: 0 0 10px rgba(22, 163, 74, 0.5);
 }
 
 .char-active {
-    color: var(--text-color);
+    color: #f97316;
+    /* Orange */
+    font-weight: 900;
     text-decoration: underline;
     text-decoration-color: var(--accent-color);
     text-decoration-thickness: 3px;
+    transform: scale(1.1);
+    display: inline-block;
 }
 
 .shake {
     animation: shake 0.3s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+.score-flash {
+    animation: flash-green 0.3s ease-out;
+}
+
+.area-flash {
+    animation: fade-green 0.5s ease-out;
+}
+
+@keyframes flash-green {
+    0% {
+        color: var(--success-color);
+        transform: scale(1.2);
+    }
+
+    100% {
+        color: inherit;
+        transform: scale(1);
+    }
+}
+
+@keyframes fade-green {
+    0% {
+        background-color: rgba(34, 197, 94, 0.3);
+        box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
+    }
+
+    100% {
+        background-color: var(--glass-bg);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
 }
 
 @keyframes shake {
