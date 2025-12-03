@@ -176,6 +176,12 @@ body {
     font-weight: 400;
 }
 
+#selected-category-display {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
 /* HUD */
 .hud {
     display: flex;

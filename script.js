@@ -15,13 +15,24 @@ let completedQuestions = []; // Track successfully completed questions
 let keyStats = {}; // { 'a': { correct: 0, miss: 0 }, ... }
 
 // DOM Elements
-const startScreen = document.getElementById('start-screen');
-const gameScreen = document.getElementById('game-screen');
+// DOM Elements
+const categoryScreen = document.getElementById('category-selection');
+const levelScreen = document.getElementById('level-selection');
+const gameScreen = document.getElementById('game-container'); // Renamed from game-screen
 const resultScreen = document.getElementById('result-screen');
-// const startBtn = document.getElementById('start-btn'); // Removed
-const courseAnalyticsBtn = document.getElementById('course-analytics');
-const courseAdBtn = document.getElementById('course-ad');
-const courseContentBtn = document.getElementById('course-content');
+
+// Category Buttons
+const catAdBtn = document.getElementById('cat-ad');
+const catAnalyticsBtn = document.getElementById('cat-analytics');
+const catContentBtn = document.getElementById('cat-content');
+
+// Level Buttons
+const level1Btn = document.getElementById('level-1');
+const level2Btn = document.getElementById('level-2');
+const level3Btn = document.getElementById('level-3');
+const backToCategoryBtn = document.getElementById('back-to-category');
+const selectedCategoryDisplay = document.getElementById('selected-category-display');
+
 const restartBtn = document.getElementById('restart-btn');
 const timerDisplay = document.getElementById('timer');
 const scoreDisplay = document.getElementById('score');
@@ -34,6 +45,9 @@ const romajiDisplay = document.getElementById('romaji-display');
 const timeProgressBar = document.getElementById('time-progress');
 const reviewList = document.getElementById('review-list');
 const typingArea = document.querySelector('.typing-area');
+
+// State for selection
+let selectedCategory = '';
 
 // Audio
 const sounds = {
@@ -55,11 +69,40 @@ function playSound(type) {
 }
 
 // Event Listeners
-courseAnalyticsBtn.addEventListener('click', () => startGame('analytics', 1));
-courseAdBtn.addEventListener('click', () => startGame('ad_term', 1));
-courseContentBtn.addEventListener('click', () => startGame('content', 2));
+catAdBtn.addEventListener('click', () => selectCategory('ad_term', '広告媒体・プラットフォーム'));
+catAnalyticsBtn.addEventListener('click', () => selectCategory('analytics', 'Web解析・効果測定'));
+catContentBtn.addEventListener('click', () => selectCategory('content', 'コンテンツ・SEO'));
+
+level1Btn.addEventListener('click', () => startGame(selectedCategory, 1));
+level2Btn.addEventListener('click', () => startGame(selectedCategory, 2));
+level3Btn.addEventListener('click', () => startGame(selectedCategory, 3));
+
+backToCategoryBtn.addEventListener('click', () => showScreen('category-selection'));
+
 restartBtn.addEventListener('click', resetGame);
 document.addEventListener('keydown', handleInput);
+
+// Functions
+function showScreen(screenId) {
+    // Hide all screens
+    [categoryScreen, levelScreen, gameScreen, resultScreen].forEach(screen => {
+        screen.classList.add('hidden');
+        screen.classList.remove('active');
+    });
+
+    // Show target screen
+    const target = document.getElementById(screenId);
+    if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('active');
+    }
+}
+
+function selectCategory(category, displayName) {
+    selectedCategory = category;
+    selectedCategoryDisplay.textContent = displayName;
+    showScreen('level-selection');
+}
 
 // Functions
 function initGame() {
@@ -104,12 +147,7 @@ async function startGame(selectedCategory, selectedLevel) {
         initGame();
         isPlaying = true;
 
-        startScreen.classList.add('hidden');
-        startScreen.classList.remove('active');
-        gameScreen.classList.remove('hidden');
-        gameScreen.classList.add('active');
-        resultScreen.classList.add('hidden');
-        resultScreen.classList.remove('active');
+        showScreen('game-container');
 
         nextTerm();
         startTimer();
@@ -323,8 +361,5 @@ function generateReviewList() {
 
 function resetGame() {
     restartBtn.blur();
-    resultScreen.classList.add('hidden');
-    resultScreen.classList.remove('active');
-    startScreen.classList.remove('hidden');
-    startScreen.classList.add('active');
+    showScreen('category-selection');
 }
