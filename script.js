@@ -62,6 +62,7 @@ function shuffleArray(array) {
 }
 
 async function startGame() {
+    startBtn.blur();
     try {
         const response = await fetch('questions.json');
         if (!response.ok) {
@@ -278,6 +279,7 @@ function generateReviewList() {
 }
 
 function resetGame() {
+    restartBtn.blur();
     resultScreen.classList.add('hidden');
     resultScreen.classList.remove('active');
     startScreen.classList.remove('hidden');
