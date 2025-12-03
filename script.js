@@ -11,13 +11,17 @@ let timerInterval = null;
 let currentTermIndex = 0;
 let charIndex = 0;
 let usedTerms = []; // To track terms used in the current session for the result screen
+let completedQuestions = []; // Track successfully completed questions
 let keyStats = {}; // { 'a': { correct: 0, miss: 0 }, ... }
 
 // DOM Elements
 const startScreen = document.getElementById('start-screen');
 const gameScreen = document.getElementById('game-screen');
 const resultScreen = document.getElementById('result-screen');
-const startBtn = document.getElementById('start-btn');
+// const startBtn = document.getElementById('start-btn'); // Removed
+const courseAnalyticsBtn = document.getElementById('course-analytics');
+const courseAdBtn = document.getElementById('course-ad');
+const courseContentBtn = document.getElementById('course-content');
 const restartBtn = document.getElementById('restart-btn');
 const timerDisplay = document.getElementById('timer');
 const scoreDisplay = document.getElementById('score');
@@ -51,7 +55,9 @@ function playSound(type) {
 }
 
 // Event Listeners
-startBtn.addEventListener('click', startGame);
+courseAnalyticsBtn.addEventListener('click', () => startGame('analytics', 1));
+courseAdBtn.addEventListener('click', () => startGame('ad_term', 1));
+courseContentBtn.addEventListener('click', () => startGame('content', 2));
 restartBtn.addEventListener('click', resetGame);
 document.addEventListener('keydown', handleInput);
 
@@ -61,6 +67,7 @@ function initGame() {
     timeLeft = 30;
     isPlaying = false;
     usedTerms = [];
+    completedQuestions = [];
     keyStats = {};
     scoreDisplay.textContent = score;
     timerDisplay.textContent = timeLeft;
@@ -78,17 +85,17 @@ function shuffleArray(array) {
     }
 }
 
-async function startGame() {
-    startBtn.blur();
+async function startGame(selectedCategory, selectedLevel) {
+    // startBtn.blur(); // Removed
     try {
-        const response = await fetch('questions.json');
+        const response = await fetch('questions.json?t=' + new Date().getTime());
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         const allQuestions = await response.json();
 
-        // Filter questions: category 'ad_term' AND level 1
-        currentQuestions = allQuestions.filter(q => q.category === 'ad_term' && q.level === 1);
+        // Filter questions based on selected course
+        currentQuestions = allQuestions.filter(q => q.category === selectedCategory && q.level === selectedLevel);
 
         if (currentQuestions.length === 0) {
             throw new Error('条件に一致する問題がありません。');
@@ -197,6 +204,7 @@ function handleInput(e) {
         if (charIndex >= currentTerm.roman.length) {
             // Word complete
             playSound('complete');
+            completedQuestions.push(currentTerm); // Add to completed list
             score += 50; // Bonus for finishing word
             scoreDisplay.textContent = score;
             currentTermIndex++;
@@ -294,10 +302,15 @@ function renderKeyStats(container, keys, isBest) {
 
 function generateReviewList() {
     reviewList.innerHTML = '';
-    // Filter unique terms just in case, though logic pushes sequentially
-    const uniqueUsedTerms = [...new Set(usedTerms)];
+    // Use completedQuestions instead of usedTerms
+    const uniqueCompletedTerms = [...new Set(completedQuestions)];
 
-    uniqueUsedTerms.forEach(term => {
+    if (uniqueCompletedTerms.length === 0) {
+        reviewList.innerHTML = '<li class="review-item" style="color: #64748b; text-align: center;">完了した問題はありません</li>';
+        return;
+    }
+
+    uniqueCompletedTerms.forEach(term => {
         const li = document.createElement('li');
         li.className = 'review-item';
         li.innerHTML = `

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Test</title>
+</head>
+
+<body>
+    <div id="output">Running test...</div>
+    <script>
+        async function test() {
+            const output = document.getElementById('output');
+            try {
+                const response = await fetch('questions.json?t=' + new Date().getTime());
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.status);
+                }
+                const data = await response.json();
+                output.innerHTML += '<br>JSON Fetched. Length: ' + data.length;
+
+                const analytics = data.filter(q => q.category === 'analytics' && q.level === 1);
+                output.innerHTML += '<br>Analytics/1: ' + analytics.length;
+
+                const ad = data.filter(q => q.category === 'ad_term' && q.level === 1);
+                output.innerHTML += '<br>Ad/1: ' + ad.length;
+
+                const content = data.filter(q => q.category === 'content' && q.level === 2);
+                output.innerHTML += '<br>Content/2: ' + content.length;
+
+            } catch (e) {
+                output.innerHTML += '<br>Error: ' + e.message;
+            }
+        }
+        test();
+    </script>
+</body>
+
+</html>

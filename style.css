@@ -145,6 +145,37 @@ body {
     color: white;
 }
 
+/* Course Selection */
+.course-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+.course-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
+    text-align: left;
+    width: 100%;
+}
+
+.course-title {
+    font-weight: 700;
+}
+
+.course-level {
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 400;
+}
+
 /* HUD */
 .hud {
     display: flex;
