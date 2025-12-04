@@ -16,10 +16,24 @@
 <body>
     <div class="background-glow"></div>
     <div class="container">
-        <!-- Level Selection Screen -->
-        <section id="level-selection" class="screen active">
+        <!-- Category Selection Screen -->
+        <section id="category-selection" class="screen active">
             <h1 class="title">WEB AD<br><span class="highlight">TYPING MASTER</span></h1>
-            <p class="subtitle">難易度を選択</p>
+            <p class="subtitle">カテゴリを選択</p>
+            <div class="course-selection">
+                <button id="cat-marketing" class="btn primary-btn course-btn" data-category="marketing">
+                    <span class="course-title">Webマーケティング用語</span>
+                </button>
+                <button id="cat-compliance" class="btn primary-btn course-btn" data-category="compliance">
+                    <span class="course-title">コンプライアンス</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Level Selection Screen -->
+        <section id="level-selection" class="screen hidden">
+            <h1 class="title">WEB AD<br><span class="highlight">TYPING MASTER</span></h1>
+            <p class="subtitle" id="level-subtitle">難易度を選択</p>
             <div class="course-selection">
                 <button id="level-1" class="btn primary-btn course-btn">
                     <span class="course-title">初級</span>

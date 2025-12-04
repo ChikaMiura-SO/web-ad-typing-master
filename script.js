@@ -1,6 +1,7 @@
 // Game Data
 // Game Data
 // Game Data
+let selectedCategory = ''; // 'marketing' or 'compliance'
 let currentQuestions = [];
 
 // Game State
@@ -17,9 +18,15 @@ let keyStats = {}; // { 'a': { correct: 0, miss: 0 }, ... }
 // DOM Elements
 // DOM Elements
 // DOM Elements
+const categoryScreen = document.getElementById('category-selection');
 const levelScreen = document.getElementById('level-selection');
 const gameScreen = document.getElementById('game-container'); // Renamed from game-screen
 const resultScreen = document.getElementById('result-screen');
+const levelSubtitle = document.getElementById('level-subtitle');
+
+// Category Buttons
+const catMarketingBtn = document.getElementById('cat-marketing');
+const catComplianceBtn = document.getElementById('cat-compliance');
 
 // Level Buttons
 const level1Btn = document.getElementById('level-1');
@@ -62,6 +69,9 @@ function playSound(type) {
 }
 
 // Event Listeners
+catMarketingBtn.addEventListener('click', () => selectCategory('marketing'));
+catComplianceBtn.addEventListener('click', () => selectCategory('compliance'));
+
 level1Btn.addEventListener('click', () => startGame(1));
 level2Btn.addEventListener('click', () => startGame(2));
 level3Btn.addEventListener('click', () => startGame(3));
@@ -72,7 +82,7 @@ document.addEventListener('keydown', handleInput);
 // Functions
 function showScreen(screenId) {
     // Hide all screens
-    [levelScreen, gameScreen, resultScreen].forEach(screen => {
+    [categoryScreen, levelScreen, gameScreen, resultScreen].forEach(screen => {
         screen.classList.add('hidden');
         screen.classList.remove('active');
     });
@@ -83,6 +93,16 @@ function showScreen(screenId) {
         target.classList.remove('hidden');
         target.classList.add('active');
     }
+}
+
+function selectCategory(category) {
+    selectedCategory = category;
+
+    // Update level screen subtitle
+    const categoryName = category === 'marketing' ? 'Webマーケティング用語' : 'コンプライアンス';
+    levelSubtitle.textContent = `${categoryName} - 難易度を選択`;
+
+    showScreen('level-selection');
 }
 
 
@@ -129,8 +149,8 @@ async function startGame(selectedLevel) {
         }
         const allQuestions = await response.json();
 
-        // Filter questions based on selected level
-        currentQuestions = allQuestions.filter(q => q.level === selectedLevel);
+        // Filter questions based on selected category and level
+        currentQuestions = allQuestions.filter(q => (q.category || 'marketing') === selectedCategory && q.level === selectedLevel);
 
         if (currentQuestions.length === 0) {
             throw new Error('条件に一致する問題がありません。');
@@ -353,5 +373,5 @@ function generateReviewList() {
 
 function resetGame() {
     restartBtn.blur();
-    showScreen('level-selection');
+    showScreen('category-selection');
 }

@@ -418,5 +418,165 @@
         "roman": "azyairuma-kethingu",
         "explanation": "計画よりも実行と適応を重視し、短期的なサイクルで改善を繰り返す手法。",
         "level": 3
+    },
+    {
+        "id": 61,
+        "term": "景品表示法",
+        "roman": "keihinnhyouzihou",
+        "explanation": "不当な顧客誘引を防ぐため、商品・サービスの品質や価格について誤認させる表示を規制する法律。",
+        "category": "compliance",
+        "level": 2
+    },
+    {
+        "id": 62,
+        "term": "特定商取引法",
+        "roman": "tokuteisyoutorihikihou",
+        "explanation": "訪問販売や通信販売など、消費者トラブルを生じやすい取引を対象に、事業者の公正な取引を確保する法律。",
+        "category": "compliance",
+        "level": 2
+    },
+    {
+        "id": 63,
+        "term": "個人情報保護法",
+        "roman": "kozinnzyouhouhogohou",
+        "explanation": "個人情報の適切な取り扱いについて定めた法律。",
+        "category": "compliance",
+        "level": 3
+    },
+    {
+        "id": 64,
+        "term": "不正競争防止法",
+        "roman": "huseikyousoukinnsihou",
+        "explanation": "他社のブランドや営業秘密の不正利用など、公正な競争を阻害する行為を規制する法律。",
+        "category": "compliance",
+        "level": 3
+    },
+    {
+        "id": 65,
+        "term": "情報セキュリティ",
+        "roman": "zyouhousekyurithi",
+        "explanation": "情報の機密性、完全性、可用性を維持すること。",
+        "category": "compliance",
+        "level": 1
+    },
+    {
+        "id": 66,
+        "term": "著作権法",
+        "roman": "tyosakukennnhou",
+        "explanation": "思想や感情を創作的に表現した著作物を保護する法律。",
+        "category": "compliance",
+        "level": 2
+    },
+    {
+        "id": 67,
+        "term": "クッキー規制",
+        "roman": "kukki-kisei",
+        "explanation": "欧州のGDPRや日本の改正個人情報保護法などで強化された、Web閲覧履歴の追跡に関する規制。",
+        "category": "compliance",
+        "level": 2
+    },
+    {
+        "id": 68,
+        "term": "オプトアウト",
+        "roman": "oputoauto",
+        "explanation": "企業からの情報収集や広告配信を拒否するために、ユーザーが自ら意思表示を行うこと。",
+        "category": "compliance",
+        "level": 1
+    },
+    {
+        "id": 69,
+        "term": "オプトイン",
+        "roman": "oputoinn",
+        "explanation": "ユーザーが事前に同意することで、情報収集やメール配信などが可能になる方式。",
+        "category": "compliance",
+        "level": 1
+    },
+    {
+        "id": 70,
+        "term": "ステマ",
+        "roman": "sutema",
+        "explanation": "ステルスマーケティングの略。広告であることを隠して宣伝する行為。（景表法違反リスクあり）",
+        "category": "compliance",
+        "level": 1
+    },
+    {
+        "id": 71,
+        "term": "薬機法",
+        "roman": "yakukihou",
+        "explanation": "医薬品、医療機器等の品質、有効性及び安全性の確保等に関する法律。（旧薬事法）",
+        "category": "compliance",
+        "level": 2
+    },
+    {
+        "id": 72,
+        "term": "個人識別符号",
+        "roman": "kozinnsikibetuhugou",
+        "explanation": "指紋や顔認証データなど、特定の個人を識別できる情報。（個人情報保護法で規制）",
+        "category": "compliance",
+        "level": 3
+    },
+    {
+        "id": 73,
+        "term": "偽装広告",
+        "roman": "gisoukoukoku",
+        "explanation": "広告内容が事実と異なり、消費者に誤解を与える行為。（景表法で規制）",
+        "category": "compliance",
+        "level": 2
+    },
+    {
+        "id": 74,
+        "term": "情報漏洩",
+        "roman": "zyouhourouei",
+        "explanation": "機密情報や個人情報が、外部に流出すること。",
+        "category": "compliance",
+        "level": 1
+    },
+    {
+        "id": 75,
+        "term": "サイバー攻撃",
+        "roman": "saiba-kougeki",
+        "explanation": "ネットワークを通じて、システムやデータに不正なアクセスや破壊を試みること。",
+        "category": "compliance",
+        "level": 1
+    },
+    {
+        "id": 76,
+        "term": "プライバシーポリシー",
+        "roman": "puraibashi-porishi-",
+        "explanation": "企業が個人情報をどのように収集、利用、管理するかを定めた方針。",
+        "category": "compliance",
+        "level": 2
+    },
+    {
+        "id": 77,
+        "term": "リベンジポルノ防止法",
+        "roman": "ribennziporunobousihou",
+        "explanation": "他人の性的な画像を無断で公開する行為を規制する法律。",
+        "category": "compliance",
+        "level": 3
+    },
+    {
+        "id": 78,
+        "term": "不正アクセス",
+        "roman": "huseiakusesu",
+        "explanation": "権限のない者がコンピューターシステムに侵入する行為。",
+        "category": "compliance",
+        "level": 1
+    },
+    {
+        "id": 79,
+        "term": "インサイダー取引",
+        "roman": "insaida-torihiki",
+        "explanation": "会社の未公開の重要情報を利用して自社株などを売買する行為。（金融商品取引法で規制）",
+        "category": "compliance",
+        "level": 3
+    },
+    {
+        "id": 80,
+        "term": "コンプライアンス",
+        "roman": "konnpuraiannsu",
+        "explanation": "法令や企業倫理を遵守すること。",
+        "category": "compliance",
+        "level": 1
     }
 ]
