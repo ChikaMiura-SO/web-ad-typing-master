@@ -16,26 +16,9 @@
 <body>
     <div class="background-glow"></div>
     <div class="container">
-        <!-- Category Selection Screen -->
-        <section id="category-selection" class="screen active">
-            <h1 class="title">WEB AD<br><span class="highlight">TYPING MASTER</span></h1>
-            <p class="subtitle">カテゴリを選択</p>
-            <div class="course-selection">
-                <button id="cat-ad" class="btn primary-btn course-btn">
-                    <span class="course-title">広告媒体・プラットフォーム</span>
-                </button>
-                <button id="cat-analytics" class="btn primary-btn course-btn">
-                    <span class="course-title">Web解析・効果測定</span>
-                </button>
-                <button id="cat-content" class="btn primary-btn course-btn">
-                    <span class="course-title">コンテンツ・SEO</span>
-                </button>
-            </div>
-        </section>
-
         <!-- Level Selection Screen -->
-        <section id="level-selection" class="screen hidden">
-            <h1 class="title"><span id="selected-category-display" class="highlight"></span></h1>
+        <section id="level-selection" class="screen active">
+            <h1 class="title">WEB AD<br><span class="highlight">TYPING MASTER</span></h1>
             <p class="subtitle">難易度を選択</p>
             <div class="course-selection">
                 <button id="level-1" class="btn primary-btn course-btn">
@@ -47,7 +30,6 @@
                 <button id="level-3" class="btn primary-btn course-btn">
                     <span class="course-title">上級</span>
                 </button>
-                <button id="back-to-category" class="btn secondary-btn" style="margin-top: 1rem;">戻る</button>
             </div>
         </section>
 
@@ -56,7 +38,7 @@
             <div class="hud">
                 <div class="timer-box">
                     <span class="label">TIME</span>
-                    <span id="timer">30</span>
+                    <span id="timer">60</span>
                 </div>
                 <div class="score-box">
                     <span class="label">SCORE</span>

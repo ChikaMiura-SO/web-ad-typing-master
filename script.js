@@ -5,7 +5,7 @@ let currentQuestions = [];
 
 // Game State
 let score = 0;
-let timeLeft = 30;
+let timeLeft = 60;
 let isPlaying = false;
 let timerInterval = null;
 let currentTermIndex = 0;
@@ -16,22 +16,15 @@ let keyStats = {}; // { 'a': { correct: 0, miss: 0 }, ... }
 
 // DOM Elements
 // DOM Elements
-const categoryScreen = document.getElementById('category-selection');
+// DOM Elements
 const levelScreen = document.getElementById('level-selection');
 const gameScreen = document.getElementById('game-container'); // Renamed from game-screen
 const resultScreen = document.getElementById('result-screen');
-
-// Category Buttons
-const catAdBtn = document.getElementById('cat-ad');
-const catAnalyticsBtn = document.getElementById('cat-analytics');
-const catContentBtn = document.getElementById('cat-content');
 
 // Level Buttons
 const level1Btn = document.getElementById('level-1');
 const level2Btn = document.getElementById('level-2');
 const level3Btn = document.getElementById('level-3');
-const backToCategoryBtn = document.getElementById('back-to-category');
-const selectedCategoryDisplay = document.getElementById('selected-category-display');
 
 const restartBtn = document.getElementById('restart-btn');
 const timerDisplay = document.getElementById('timer');
@@ -47,7 +40,7 @@ const reviewList = document.getElementById('review-list');
 const typingArea = document.querySelector('.typing-area');
 
 // State for selection
-let selectedCategory = '';
+
 
 // Audio
 const sounds = {
@@ -69,15 +62,9 @@ function playSound(type) {
 }
 
 // Event Listeners
-catAdBtn.addEventListener('click', () => selectCategory('ad_term', '広告媒体・プラットフォーム'));
-catAnalyticsBtn.addEventListener('click', () => selectCategory('analytics', 'Web解析・効果測定'));
-catContentBtn.addEventListener('click', () => selectCategory('content', 'コンテンツ・SEO'));
-
-level1Btn.addEventListener('click', () => startGame(selectedCategory, 1));
-level2Btn.addEventListener('click', () => startGame(selectedCategory, 2));
-level3Btn.addEventListener('click', () => startGame(selectedCategory, 3));
-
-backToCategoryBtn.addEventListener('click', () => showScreen('category-selection'));
+level1Btn.addEventListener('click', () => startGame(1));
+level2Btn.addEventListener('click', () => startGame(2));
+level3Btn.addEventListener('click', () => startGame(3));
 
 restartBtn.addEventListener('click', resetGame);
 document.addEventListener('keydown', handleInput);
@@ -85,7 +72,7 @@ document.addEventListener('keydown', handleInput);
 // Functions
 function showScreen(screenId) {
     // Hide all screens
-    [categoryScreen, levelScreen, gameScreen, resultScreen].forEach(screen => {
+    [levelScreen, gameScreen, resultScreen].forEach(screen => {
         screen.classList.add('hidden');
         screen.classList.remove('active');
     });
@@ -98,16 +85,12 @@ function showScreen(screenId) {
     }
 }
 
-function selectCategory(category, displayName) {
-    selectedCategory = category;
-    selectedCategoryDisplay.textContent = displayName;
-    showScreen('level-selection');
-}
+
 
 // Functions
 function initGame() {
     score = 0;
-    timeLeft = 30;
+    timeLeft = 60;
     isPlaying = false;
     usedTerms = [];
     completedQuestions = [];
@@ -128,8 +111,17 @@ function shuffleArray(array) {
     }
 }
 
-async function startGame(selectedCategory, selectedLevel) {
-    // startBtn.blur(); // Removed
+async function startGame(selectedLevel) {
+    // Prevent Enter key from triggering button click again
+    if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+    }
+
+    // Clear any existing timer to prevent multiple intervals
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
     try {
         const response = await fetch('questions.json?t=' + new Date().getTime());
         if (!response.ok) {
@@ -137,8 +129,8 @@ async function startGame(selectedCategory, selectedLevel) {
         }
         const allQuestions = await response.json();
 
-        // Filter questions based on selected course
-        currentQuestions = allQuestions.filter(q => q.category === selectedCategory && q.level === selectedLevel);
+        // Filter questions based on selected level
+        currentQuestions = allQuestions.filter(q => q.level === selectedLevel);
 
         if (currentQuestions.length === 0) {
             throw new Error('条件に一致する問題がありません。');
@@ -163,7 +155,7 @@ function startTimer() {
         timerDisplay.textContent = timeLeft;
 
         // Update progress bar
-        const progressPercentage = (timeLeft / 30) * 100;
+        const progressPercentage = (timeLeft / 60) * 100;
         timeProgressBar.style.width = `${progressPercentage}%`;
 
         if (timeLeft <= 5) {
@@ -361,5 +353,5 @@ function generateReviewList() {
 
 function resetGame() {
     restartBtn.blur();
-    showScreen('category-selection');
+    showScreen('level-selection');
 }

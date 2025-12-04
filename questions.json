@@ -1,74 +1,422 @@
 [
     {
         "id": 1,
-        "term": "検索連動型広告",
-        "roman": "kensakurendougatakoukoku",
-        "explanation": "検索エンジンの結果ページ上部に表示される、クリック課金型の広告。（リスティング広告）",
-        "category": "ad_term",
+        "term": "ユニークユーザー",
+        "roman": "yuni-kuyu-za-",
+        "explanation": "特定の期間内にサイトを訪問した人数。（UU）",
         "level": 1
     },
     {
         "id": 2,
-        "term": "グーグルディスプレイネットワーク",
-        "roman": "gu-gurudisupureinettowa-ku",
-        "explanation": "Googleの提携サイトに表示される画像やテキストの広告ネットワーク。（GDN）",
-        "category": "ad_term",
+        "term": "コンバージョン率",
+        "roman": "konnba-zyonnritu",
+        "explanation": "サイト訪問者のうち、最終的な成果に至った割合。（CVR）",
         "level": 1
     },
     {
         "id": 3,
-        "term": "インプレッション",
-        "roman": "innpuressyon",
-        "explanation": "広告やコンテンツがユーザーに表示された回数を示す指標。",
-        "category": "ad_term",
+        "term": "直帰率",
+        "roman": "tyokkiritu",
+        "explanation": "ユーザーが最初のページだけを見て、他のページへ移動せずにサイトを離脱した割合。",
         "level": 1
     },
     {
         "id": 4,
-        "term": "コンバージョン",
-        "roman": "konnba-zyonn",
-        "explanation": "Webサイトにおける最終的な成果（購入、資料請求、問い合わせなど）のこと。",
-        "category": "analytics",
+        "term": "オーガニック検索",
+        "roman": "o-ganikkukensaku",
+        "explanation": "広告ではない、自然な検索結果からの流入。",
         "level": 1
     },
     {
         "id": 5,
-        "term": "コンバージョン率",
-        "roman": "konnba-zyonnritu",
-        "explanation": "サイト訪問者のうち、CVに至った割合。（CVR）",
-        "category": "analytics",
+        "term": "インプレッション",
+        "roman": "innpuressyonn",
+        "explanation": "広告やコンテンツがユーザーに表示された回数。",
         "level": 1
     },
     {
         "id": 6,
-        "term": "ユニークユーザー",
-        "roman": "yuni-kuyu-za-",
-        "explanation": "特定の期間内にサイトを訪問した人数。（UU）",
-        "category": "analytics",
+        "term": "クリック率",
+        "roman": "kurikkuritu",
+        "explanation": "表示回数のうち、クリックされた割合。（CTR）",
         "level": 1
     },
     {
         "id": 7,
-        "term": "ロングテールキーワード",
-        "roman": "rongute-ruki-wa-do",
-        "explanation": "検索回数は少ないが、具体的なニーズを持つユーザーが検索する複数の単語からなるキーワード。",
-        "category": "content",
-        "level": 2
+        "term": "ランディングページ",
+        "roman": "ranndhingupe-zi",
+        "explanation": "広告や検索結果からユーザーが最初に訪問するページ。（LP）",
+        "level": 1
     },
     {
         "id": 8,
-        "term": "ユーザーインテント",
-        "roman": "yu-za-inntento",
-        "explanation": "ユーザーが検索エンジンやWebサイトで何かを探す際に持っている**真の意図や目的**。",
-        "category": "content",
-        "level": 2
+        "term": "グーグルディスプレイネットワーク",
+        "roman": "gu-gurudhisupureinettowa-ku",
+        "explanation": "Googleの提携サイトに表示される広告ネットワーク。（GDN）",
+        "level": 1
     },
     {
         "id": 9,
+        "term": "検索連動型広告",
+        "roman": "kennsakurenndougatakoukoku",
+        "explanation": "検索エンジンの結果ページ上部に表示される広告。（リスティング広告）",
+        "level": 1
+    },
+    {
+        "id": 10,
+        "term": "費用対効果",
+        "roman": "hiyoutaikouka",
+        "explanation": "投じたコストに対して得られた利益の割合。（ROI）",
+        "level": 1
+    },
+    {
+        "id": 11,
+        "term": "ファネル",
+        "roman": "faneru",
+        "explanation": "顧客が認知から購入に至るまでのプロセスを図式化したもの。漏斗（ろうと）の形に似る。",
+        "level": 1
+    },
+    {
+        "id": 12,
+        "term": "ターゲティング",
+        "roman": "ta-gethingu",
+        "explanation": "広告配信の対象となるユーザー層を絞り込むこと。",
+        "level": 1
+    },
+    {
+        "id": 13,
+        "term": "ページビュー",
+        "roman": "pe-zibyu-",
+        "explanation": "Webサイト内の特定のページが表示された回数。（PV）",
+        "level": 1
+    },
+    {
+        "id": 14,
+        "term": "アフィリエイト",
+        "roman": "afirieito",
+        "explanation": "成果報酬型の広告システム。",
+        "level": 1
+    },
+    {
+        "id": 15,
+        "term": "カスタマージャーニー",
+        "roman": "kasutama-zya-ni-",
+        "explanation": "顧客が商品・サービスと接点を持ってから購入に至るまでの道のり。",
+        "level": 1
+    },
+    {
+        "id": 16,
+        "term": "リターゲティング",
+        "roman": "rita-gethingu",
+        "explanation": "一度サイトを訪問したユーザーに対し、再度広告を表示すること。",
+        "level": 1
+    },
+    {
+        "id": 17,
+        "term": "チャットボット",
+        "roman": "tyattobotto",
+        "explanation": "会話形式で自動応答を行うプログラム。",
+        "level": 1
+    },
+    {
+        "id": 18,
+        "term": "ヒートマップ",
+        "roman": "hi-tomappu",
+        "explanation": "Webサイト上でユーザーがよく見ている場所を色で可視化するツール。",
+        "level": 1
+    },
+    {
+        "id": 19,
+        "term": "コンテンツマーケティング",
+        "roman": "konntenntuma-kethingu",
+        "explanation": "価値ある情報を提供することで顧客を育成するマーケティング手法。",
+        "level": 1
+    },
+    {
+        "id": 20,
+        "term": "インフルエンサー",
+        "roman": "innhuruennsa-",
+        "explanation": "SNSなどで影響力を持つ人物。",
+        "level": 1
+    },
+    {
+        "id": 21,
+        "term": "カスタマーアクイジションコスト",
+        "roman": "kasutama-akuizisyonnkosuto",
+        "explanation": "一人の顧客を獲得するためにかかった費用。（CAC）",
+        "level": 2
+    },
+    {
+        "id": 22,
+        "term": "カスタマーリレーションシップマネジメント",
+        "roman": "kasutama-rire-syonnsippumanezimennto",
+        "explanation": "顧客との関係性を構築・維持することでLTVの最大化を目指す手法。（CRM）",
+        "level": 2
+    },
+    {
+        "id": 23,
+        "term": "コンテンツデリバリーネットワーク",
+        "roman": "konntenntuderibari-nettowa-ku",
+        "explanation": "Webコンテンツを高速に配信するためのネットワークシステム。（CDN）",
+        "level": 2
+    },
+    {
+        "id": 24,
+        "term": "デマンドサイドプラットフォーム",
+        "roman": "demanndosaidopurettofo-mu",
+        "explanation": "広告主側の広告効果最大化を支援するプラットフォーム。（DSP）",
+        "level": 2
+    },
+    {
+        "id": 25,
+        "term": "サプライサイドプラットフォーム",
+        "roman": "sapuraisaidopurattofo-mu",
+        "explanation": "媒体側の広告枠販売の効率化を支援するプラットフォーム。（SSP）",
+        "level": 2
+    },
+    {
+        "id": 26,
+        "term": "セカンドプライスオークション",
+        "roman": "sekanndopuraisuo-kusyonn",
+        "explanation": "入札額でなく、2番目に高い入札額＋最低限の金額で落札額が決定される仕組み。",
+        "level": 2
+    },
+    {
+        "id": 27,
+        "term": "サーチエンジンオプティマイゼーション",
+        "roman": "sa-tiennzinnoputhimaize-syonn",
+        "explanation": "検索エンジンで上位表示を目指すための技術や施策。（SEO）",
+        "level": 2
+    },
+    {
+        "id": 28,
+        "term": "パーチェスファネル",
+        "roman": "pa-tyesufaneru",
+        "explanation": "購入（Purchase）に至るまでの顧客の行動プロセスを図式化したもの。",
+        "level": 2
+    },
+    {
+        "id": 29,
+        "term": "カスタマーサクセス",
+        "roman": "kasutamaa-sakusesu",
+        "explanation": "顧客が商品・サービスを通して成功体験を得られるよう能動的に支援する活動。",
+        "level": 2
+    },
+    {
+        "id": 30,
+        "term": "アトリビューション",
+        "roman": "atoribyu-syonn",
+        "explanation": "コンバージョンに至るまでの複数の接点（チャネル）に対する貢献度を評価すること。",
+        "level": 2
+    },
+    {
+        "id": 31,
+        "term": "ユーザーインテント",
+        "roman": "yu-za-inntennto",
+        "explanation": "ユーザーが検索エンジンで何かを探す際に持っている**真の意図や目的**。",
+        "level": 2
+    },
+    {
+        "id": 32,
+        "term": "クリエイティブ",
+        "roman": "kurieithibu",
+        "explanation": "広告におけるバナー画像や動画などの視覚的要素。",
+        "level": 2
+    },
+    {
+        "id": 33,
         "term": "ペルソナ",
         "roman": "perusona",
-        "explanation": "自社の商品・サービスにとって最も重要で理想的な顧客像を具体的に設定したもの。",
-        "category": "content",
+        "explanation": "自社にとって理想的な顧客像を具体的に設定したもの。",
         "level": 2
+    },
+    {
+        "id": 34,
+        "term": "オウンドメディア",
+        "roman": "ounndomedhia",
+        "explanation": "企業自身が所有・運営するWebサイトやブログなどのメディア。",
+        "level": 2
+    },
+    {
+        "id": 35,
+        "term": "エンゲージメント",
+        "roman": "ennge-zimennto",
+        "explanation": "ユーザーがコンテンツやブランドに対して示す愛着や関与度。",
+        "level": 2
+    },
+    {
+        "id": 36,
+        "term": "セッション",
+        "roman": "sessyonn",
+        "explanation": "ユーザーがサイトを訪問してから離脱するまでの一連の行動。",
+        "level": 2
+    },
+    {
+        "id": 37,
+        "term": "キーワードカニバリゼーション",
+        "roman": "ki-wa-dokanibarize-syonn",
+        "explanation": "同一サイト内で複数のページが同じキーワードで競合し、共倒れになる現象。",
+        "level": 2
+    },
+    {
+        "id": 38,
+        "term": "ユーザーエクスペリエンス",
+        "roman": "yu-za-ekusuperiennsu",
+        "explanation": "ユーザーが製品やサービスを通じて得られる体験全般。（UX）",
+        "level": 2
+    },
+    {
+        "id": 39,
+        "term": "コンバージョンポイント",
+        "roman": "konnba-zyonnpointo",
+        "explanation": "Webサイト上でコンバージョン（成果）が発生する場所・地点。",
+        "level": 2
+    },
+    {
+        "id": 40,
+        "term": "ネイティブアド",
+        "roman": "neithibuado",
+        "explanation": "コンテンツの一部として自然に溶け込んでいる広告。",
+        "level": 2
+    },
+    {
+        "id": 41,
+        "term": "顧客生涯価値",
+        "roman": "kokyakusyougaikati",
+        "explanation": "一人の顧客が取引開始から終了までに企業にもたらす利益の総額。（LTV）",
+        "level": 3
+    },
+    {
+        "id": 42,
+        "term": "セグメンテーションターゲティングポジショニング",
+        "roman": "segumennte-syonnta-gethingupozisyoninngu",
+        "explanation": "市場を細分化し、狙うべき層を定め、自社の立ち位置を明確にするマーケティングの基本戦略。（STP）",
+        "level": 3
+    },
+    {
+        "id": 43,
+        "term": "リターンオンアドスぺンド",
+        "roman": "rita-nnonnadosupenndo",
+        "explanation": "広告費用対効果。投じた広告費に対してどれだけの売上が得られたかを示す指標。（ROAS）",
+        "level": 3
+    },
+    {
+        "id": 44,
+        "term": "サーバサイドトラッキング",
+        "roman": "sa-basaidotorakkingu",
+        "explanation": "ユーザーの行動計測をWebブラウザではなく、サーバー側で行う方式。（ITP対策などで重要）",
+        "level": 3
+    },
+    {
+        "id": 45,
+        "term": "ユーザビリティ",
+        "roman": "yu-zabirithi",
+        "explanation": "Webサイトやシステムの使いやすさ、分かりやすさ。",
+        "level": 3
+    },
+    {
+        "id": 46,
+        "term": "ベネフィット",
+        "roman": "benefitto",
+        "explanation": "顧客が商品・サービスから得られる「未来の理想像」や「価値」。（機能ではない）",
+        "level": 3
+    },
+    {
+        "id": 47,
+        "term": "マーケティングオートメーション",
+        "roman": "ma-kethinguo-tome-syonn",
+        "explanation": "見込み顧客（リード）の獲得・育成を自動化する仕組み。（MA）",
+        "level": 3
+    },
+    {
+        "id": 48,
+        "term": "リードナーチャリング",
+        "roman": "ri-dona-tyarinngu",
+        "explanation": "獲得した見込み顧客に対し、継続的に情報を提供し、購買意欲を高める活動。",
+        "level": 3
+    },
+    {
+        "id": 49,
+        "term": "デモグラフィックデータ",
+        "roman": "demogurafikkude-ta",
+        "explanation": "性別、年齢、職業、所得など、人口統計学的な属性データ。",
+        "level": 3
+    },
+    {
+        "id": 50,
+        "term": "行動ターゲティング",
+        "roman": "koudouta-gethingu",
+        "explanation": "過去のWeb上での行動履歴（閲覧履歴など）に基づいて広告を配信する手法。",
+        "level": 3
+    },
+    {
+        "id": 51,
+        "term": "サイコグラフィックデータ",
+        "roman": "saikogurafikkude-ta",
+        "explanation": "興味、関心、ライフスタイル、価値観など、心理学的な属性データ。",
+        "level": 3
+    },
+    {
+        "id": 52,
+        "term": "コンテキストマーケティング",
+        "roman": "konntekisutoma-kethingu",
+        "explanation": "ユーザーの状況（場所、時間、デバイスなど）に合わせて最適な情報を提供する手法。",
+        "level": 3
+    },
+    {
+        "id": 53,
+        "term": "スケーラビリティ",
+        "roman": "suke-rabirithi",
+        "explanation": "システムやサービスが、ユーザー増加や負荷増大に対応できる拡張性。",
+        "level": 3
+    },
+    {
+        "id": 54,
+        "term": "クロスメディア",
+        "roman": "kurosumedhia",
+        "explanation": "テレビ、Web、SNSなど複数の媒体を組み合わせて広告やプロモーションを行う手法。",
+        "level": 3
+    },
+    {
+        "id": 55,
+        "term": "ペイドメディア",
+        "roman": "peidomedhia",
+        "explanation": "広告費を支払って利用する媒体（Web広告、テレビCMなど）。",
+        "level": 3
+    },
+    {
+        "id": 56,
+        "term": "アーリーアダプター",
+        "roman": "a-ri-adaputa-",
+        "explanation": "新しい製品やサービスを比較的早い段階で採用する層。",
+        "level": 3
+    },
+    {
+        "id": 57,
+        "term": "リファラー",
+        "roman": "rifara-",
+        "explanation": "ユーザーが一つ前に見ていたWebページのURL。",
+        "level": 3
+    },
+    {
+        "id": 58,
+        "term": "サードパーティクッキー",
+        "roman": "sa-dopa-thikukki-",
+        "explanation": "訪問中のサイトとは異なるドメインが発行したクッキー。主にトラッキングに使用される。",
+        "level": 3
+    },
+    {
+        "id": 59,
+        "term": "プログラマティック広告",
+        "roman": "puroguramathikkukoukoku",
+        "explanation": "広告の買い付けや配信をシステムが自動的に行う取引。",
+        "level": 3
+    },
+    {
+        "id": 60,
+        "term": "アジャイルマーケティング",
+        "roman": "azyairuma-kethingu",
+        "explanation": "計画よりも実行と適応を重視し、短期的なサイクルで改善を繰り返す手法。",
+        "level": 3
     }
 ]
