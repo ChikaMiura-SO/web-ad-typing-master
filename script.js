@@ -10,7 +10,7 @@ let timeLeft = 60;
 let isPlaying = false;
 let timerInterval = null;
 let currentTermIndex = 0;
-let charIndex = 0;
+let typingState = null; // Current typing state from TypingEngine
 let usedTerms = []; // To track terms used in the current session for the result screen
 let completedQuestions = []; // Track successfully completed questions
 let keyStats = {}; // { 'a': { correct: 0, miss: 0 }, ... }
@@ -143,14 +143,29 @@ async function startGame(selectedLevel) {
     }
 
     try {
-        const response = await fetch('questions.json?t=' + new Date().getTime());
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const allQuestions = await response.json();
+        let allQuestions = [];
 
-        // Filter questions based on selected category and level
-        currentQuestions = allQuestions.filter(q => (q.category || 'marketing') === selectedCategory && q.level === selectedLevel);
+        // Try to fetch from Firestore first
+        if (typeof FirestoreService !== 'undefined' && FirestoreService.fetchQuestionsFromFirestore) {
+            console.log('Fetching from Firestore...');
+            allQuestions = await FirestoreService.fetchQuestionsFromFirestore(selectedCategory, selectedLevel);
+            console.log(`Fetched ${allQuestions.length} questions from Firestore`);
+        }
+
+        // Fallback to questions.json if Firestore returns empty or fails
+        if (allQuestions.length === 0) {
+            console.log('Falling back to questions.json...');
+            const response = await fetch('questions.json?t=' + new Date().getTime());
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const jsonQuestions = await response.json();
+
+            // Filter questions based on selected category and level
+            allQuestions = jsonQuestions.filter(q => (q.category || 'marketing') === selectedCategory && q.level === selectedLevel);
+        }
+
+        currentQuestions = allQuestions;
 
         if (currentQuestions.length === 0) {
             throw new Error('条件に一致する問題がありません。');
@@ -201,48 +216,69 @@ function nextTerm() {
     usedTerms.push(currentTerm); // Track for review
 
     termDisplay.textContent = currentTerm.term;
-    readingDisplay.textContent = ''; // Reading removed in new data structure
 
-    charIndex = 0;
+    // Get reading from data (hiragana) - use 'reading' field, fallback to 'roman' for compatibility
+    const reading = currentTerm.reading || currentTerm.roman || '';
+    readingDisplay.textContent = reading; // Show hiragana reading
+
+    // Generate typing state from hiragana
+    typingState = TypingEngine.generateTypingState(reading);
     updateRomajiDisplay();
 }
 
 function updateRomajiDisplay() {
-    const currentTerm = currentQuestions[currentTermIndex];
-    const romaji = currentTerm.roman;
+    if (!typingState) return;
+
+    const display = TypingEngine.getDisplayRomaji(typingState);
 
     let html = '';
-    for (let i = 0; i < romaji.length; i++) {
-        if (i < charIndex) {
-            html += `<span class="char-correct">${romaji[i]}</span>`;
-        } else if (i === charIndex) {
-            html += `<span class="char-active">${romaji[i]}</span>`;
-        } else {
-            html += `<span>${romaji[i]}</span>`;
+
+    // Completed part (green)
+    if (display.completed) {
+        html += `<span class="char-correct">${display.completed}</span>`;
+    }
+
+    // Current input part (orange, active)
+    if (display.current) {
+        html += `<span class="char-correct">${display.current}</span>`;
+    }
+
+    // Remaining part - first char is active
+    if (display.remaining) {
+        html += `<span class="char-active">${display.remaining[0]}</span>`;
+        if (display.remaining.length > 1) {
+            html += `<span>${display.remaining.substring(1)}</span>`;
         }
     }
+
     romajiDisplay.innerHTML = html;
 }
 
 function handleInput(e) {
-    if (!isPlaying) return;
+    if (!isPlaying || !typingState) return;
 
-    const currentTerm = currentQuestions[currentTermIndex];
-    const targetChar = currentTerm.roman[charIndex];
-
-    // Ignore modifier keys
+    // Ignore modifier keys and special keys
     if (e.key.length > 1) return;
 
+    const key = e.key.toLowerCase();
+
+    // Get the expected next character for stats tracking
+    const display = TypingEngine.getDisplayRomaji(typingState);
+    const targetChar = display.remaining ? display.remaining[0] : '';
+
     // Initialize stats for this char if not exists
-    if (!keyStats[targetChar]) {
+    if (targetChar && !keyStats[targetChar]) {
         keyStats[targetChar] = { correct: 0, miss: 0 };
     }
 
-    if (e.key.toLowerCase() === targetChar) {
+    // Process input through typing engine
+    const result = TypingEngine.processKeyInput(typingState, key);
+
+    if (result.isCorrect) {
         // Correct
         playSound('tap');
-        keyStats[targetChar].correct++;
-        charIndex++;
+        if (targetChar) keyStats[targetChar].correct++;
+        typingState = result.newState;
         score += 10;
         scoreDisplay.textContent = score;
 
@@ -251,9 +287,10 @@ function handleInput(e) {
         void scoreDisplay.offsetWidth; // Trigger reflow
         scoreDisplay.classList.add('score-flash');
 
-        if (charIndex >= currentTerm.roman.length) {
+        if (result.isWordComplete) {
             // Word complete
             playSound('complete');
+            const currentTerm = currentQuestions[currentTermIndex];
             completedQuestions.push(currentTerm); // Add to completed list
             score += 50; // Bonus for finishing word
             scoreDisplay.textContent = score;
@@ -274,7 +311,7 @@ function handleInput(e) {
     } else {
         // Incorrect
         playSound('miss');
-        keyStats[targetChar].miss++;
+        if (targetChar) keyStats[targetChar].miss++;
         typingArea.classList.add('shake');
         typingArea.style.borderColor = '#ef4444';
         setTimeout(() => {

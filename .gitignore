@@ -1,6 +1,8 @@
 # Firebase 秘密鍵など、機密性の高い設定ファイルを無視
 serviceAccountKey.json
+firebaseConfig.js
 *.env
 node_modules/
 dist/
 .DS_Store
+.firebase/
