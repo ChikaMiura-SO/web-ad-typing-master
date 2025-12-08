@@ -1,15 +1,105 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ja">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Web Ad Typing Master - Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Ad Typing Master</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div class="background-glow"></div>
+    <div class="container">
+        <!-- Category Selection Screen -->
+        <section id="category-selection" class="screen active">
+            <h1 class="title">WEB AD<br><span class="highlight">TYPING MASTER</span></h1>
+            <p class="subtitle">カテゴリを選択</p>
+            <div class="course-selection">
+                <button id="cat-marketing" class="btn primary-btn course-btn" data-category="marketing">
+                    <span class="course-title">Webマーケティング用語</span>
+                </button>
+                <button id="cat-compliance" class="btn primary-btn course-btn" data-category="compliance">
+                    <span class="course-title">コンプライアンス</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Level Selection Screen -->
+        <section id="level-selection" class="screen hidden">
+            <h1 class="title">WEB AD<br><span class="highlight">TYPING MASTER</span></h1>
+            <p class="subtitle" id="level-subtitle">難易度を選択</p>
+            <div class="course-selection">
+                <button id="level-1" class="btn primary-btn course-btn">
+                    <span class="course-title">初級</span>
+                </button>
+                <button id="level-2" class="btn primary-btn course-btn">
+                    <span class="course-title">中級</span>
+                </button>
+                <button id="level-3" class="btn primary-btn course-btn">
+                    <span class="course-title">上級</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Game Screen -->
+        <section id="game-container" class="screen hidden">
+            <div class="hud">
+                <div class="timer-box">
+                    <span class="label">TIME</span>
+                    <span id="timer">60</span>
+                </div>
+                <div class="score-box">
+                    <span class="label">SCORE</span>
+                    <span id="score">0</span>
+                </div>
+            </div>
+
+            <div id="problem-area" class="typing-area">
+                <div id="term-display" class="term-display">Wait...</div>
+                <div id="term-reading" class="term-reading"></div>
+                <div id="romaji-display" class="romaji-display"></div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div id="time-progress" class="progress-bar"></div>
+            </div>
+        </section>
+
+        <!-- Result Screen -->
+        <section id="result-screen" class="screen hidden">
+            <h2 class="result-title">TIME UP</h2>
+            <div class="final-score-box">
+                <span class="label">FINAL SCORE</span>
+                <span id="final-score">0</span>
+            </div>
+            <button id="restart-btn" class="btn secondary-btn">PLAY AGAIN</button>
+
+            <div class="stats-container">
+                <div class="stats-box best-keys">
+                    <h3>得意なキー (Top 3)</h3>
+                    <div id="best-keys-list" class="keys-list"></div>
+                </div>
+                <div class="stats-box worst-keys">
+                    <h3>苦手なキー (Top 3)</h3>
+                    <div id="worst-keys-list" class="keys-list"></div>
+                </div>
+            </div>
+
+            <div class="review-section">
+                <h3>用語解説</h3>
+                <ul id="review-list" class="review-list">
+                    <!-- List items will be injected here -->
+                </ul>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
 </body>
 
 </html>
