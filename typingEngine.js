@@ -124,19 +124,24 @@ function generateTypingState(hiragana) {
                 const nextChar = i + 1 < hiragana.length ? hiragana[i + 1] : '';
                 const nextRomaji = HIRAGANA_TO_ROMAJI_MAP[nextChar];
 
-                // 次の文字が母音や「や」行で始まる場合、n 単独は不可
+                // 常に nn も許可（n' は削除し、n と nn のみにする）
                 if (nextRomaji && nextRomaji.length > 0) {
                     const nextFirstChar = nextRomaji[0][0];
                     if (VOWELS_AND_Y.has(nextFirstChar)) {
-                        // nn または n' のみ許可（n 単独を除去）
-                        // patterns は ['nn', "n'"] なのでそのまま
+                        // 次の文字が母音や「や」行で始まる場合
+                        // nn のみ許可（n 単独だと次の文字と混同する）
+                        // patterns は ['nn', "n'"] だが、n' を除いて nn のみにする
+                        patterns.length = 0;
+                        patterns.push('nn');
                     } else {
-                        // 次が子音で始まる場合、n 単独も可
-                        patterns.push('n');
+                        // 次が子音で始まる場合、n と nn の両方を許可
+                        patterns.length = 0;
+                        patterns.push('n', 'nn');
                     }
                 } else {
-                    // 末尾の「ん」は n 単独も可
-                    patterns.push('n');
+                    // 末尾の「ん」は n と nn の両方を許可
+                    patterns.length = 0;
+                    patterns.push('n', 'nn');
                 }
             }
 
@@ -178,9 +183,51 @@ function processKeyInput(state, key) {
     const segment = state.segments[state.currentSegmentIndex];
     const testInput = state.currentInput + key.toLowerCase();
 
-    // 完全一致チェック
+    // 「ん」の特殊処理: 'n' が入力済みで、'nn' も有効パターンの場合
+    // 次のキーが 'n' 以外なら、'n' でセグメント完了して次セグメントの処理も行う
+    if (state.currentInput === 'n' && segment.patterns.includes('n') && segment.patterns.includes('nn')) {
+        if (key.toLowerCase() === 'n') {
+            // 'nn' で完了
+            const newState = {
+                ...state,
+                currentSegmentIndex: state.currentSegmentIndex + 1,
+                currentInput: '',
+                completedRomaji: state.completedRomaji + 'nn'
+            };
+            const isWordComplete = newState.currentSegmentIndex >= state.segments.length;
+            return { isCorrect: true, isSegmentComplete: true, isWordComplete, newState };
+        } else {
+            // 'n' で完了し、次のセグメントに対してキーを処理
+            const intermediateState = {
+                ...state,
+                currentSegmentIndex: state.currentSegmentIndex + 1,
+                currentInput: '',
+                completedRomaji: state.completedRomaji + 'n'
+            };
+
+            // 次のセグメントが存在するか確認
+            if (intermediateState.currentSegmentIndex >= state.segments.length) {
+                // 単語完了、でも追加のキーは不正解
+                return { isCorrect: false, isSegmentComplete: true, isWordComplete: true, newState: intermediateState };
+            }
+
+            // 次のセグメントに対してキーを処理
+            return processKeyInput(intermediateState, key);
+        }
+    }
+
+    // 完全一致チェック（ただし 'n' と 'nn' が両方有効な場合は 'n' で即完了しない）
     for (const pattern of segment.patterns) {
         if (pattern === testInput) {
+            // 'n' でかつ 'nn' も有効パターンの場合は、まだ完了しない
+            if (testInput === 'n' && segment.patterns.includes('nn')) {
+                const newState = {
+                    ...state,
+                    currentInput: testInput
+                };
+                return { isCorrect: true, isSegmentComplete: false, isWordComplete: false, newState };
+            }
+
             // セグメント完了
             const newState = {
                 ...state,
