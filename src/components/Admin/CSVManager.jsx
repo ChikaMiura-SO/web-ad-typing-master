@@ -71,9 +71,32 @@ const CSVManager = () => {
                     return;
                 }
 
-                addLog('Validation passed. Starting batch update...');
+                addLog('Validation passed. Deleting existing data...');
 
                 try {
+                    // First, delete all existing documents
+                    const existingDocs = await getDocs(collection(db, 'problems'));
+                    if (existingDocs.size > 0) {
+                        const deleteBatchSize = 500;
+                        const docsToDelete = existingDocs.docs;
+
+                        for (let i = 0; i < docsToDelete.length; i += deleteBatchSize) {
+                            const deleteBatch = writeBatch(db);
+                            const chunk = docsToDelete.slice(i, i + deleteBatchSize);
+
+                            chunk.forEach(doc => {
+                                deleteBatch.delete(doc.ref);
+                            });
+
+                            await deleteBatch.commit();
+                        }
+                        addLog(`Deleted ${existingDocs.size} existing documents.`);
+                    } else {
+                        addLog('No existing documents to delete.');
+                    }
+
+                    addLog('Inserting new data...');
+
                     // Process in batches of 500 (Firestore limit)
                     const batchSize = 500;
                     for (let i = 0; i < validRows.length; i += batchSize) {
@@ -85,11 +108,11 @@ const CSVManager = () => {
                             batch.set(docRef, {
                                 ...row,
                                 updatedAt: new Date()
-                            }, { merge: true });
+                            });
                         });
 
                         await batch.commit();
-                        addLog(`Processed batch ${i / batchSize + 1} (${chunk.length} items).`);
+                        addLog(`Processed batch ${Math.floor(i / batchSize) + 1} (${chunk.length} items).`);
                     }
 
                     addLog('Import completed successfully!', 'success');
@@ -119,8 +142,7 @@ const CSVManager = () => {
                 return;
             }
 
-            // Define fields order
-            const fields = ['course_id', 'level_id', 'question_id', 'question_text', 'correct_answer', 'explanation'];
+            const fields = ['course_id', 'level_id', 'question_id', 'question_text', 'correct_answer'];
             const csv = Papa.unparse(data, { columns: fields });
 
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -148,8 +170,7 @@ const CSVManager = () => {
             <div style={{ marginBottom: '20px', padding: '15px', border: '1px solid #e5e7eb', borderRadius: '8px' }}>
                 <h4>Import CSV</h4>
                 <p style={{ fontSize: '0.9rem', color: '#6b7280' }}>
-                    Required headers: <code>course_id, level_id, question_id, question_text, correct_answer</code><br />
-                    Optional: <code>explanation</code>
+                    Required headers: <code>course_id, level_id, question_id, question_text, correct_answer</code>
                 </p>
                 <input type="file" accept=".csv" onChange={handleFileChange} disabled={loading} />
                 <button onClick={handleImport} className="btn btn-primary" disabled={!file || loading}>

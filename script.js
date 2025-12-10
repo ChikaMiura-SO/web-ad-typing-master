@@ -14,6 +14,7 @@ let typingState = null; // Current typing state from TypingEngine
 let usedTerms = []; // To track terms used in the current session for the result screen
 let completedQuestions = []; // Track successfully completed questions
 let keyStats = {}; // { 'a': { correct: 0, miss: 0 }, ... }
+let currentLevel = 1; // Track selected level for UI hints
 
 // DOM Elements
 // DOM Elements
@@ -45,6 +46,7 @@ const romajiDisplay = document.getElementById('romaji-display');
 const timeProgressBar = document.getElementById('time-progress');
 const reviewList = document.getElementById('review-list');
 const typingArea = document.querySelector('.typing-area');
+const levelHint = document.getElementById('level-hint');
 
 // State for selection
 
@@ -142,6 +144,9 @@ async function startGame(selectedLevel) {
         clearInterval(timerInterval);
     }
 
+    // Store current level for UI hints
+    currentLevel = selectedLevel;
+
     try {
         let allQuestions = [];
 
@@ -215,10 +220,20 @@ function nextTerm() {
     const currentTerm = currentQuestions[currentTermIndex];
     usedTerms.push(currentTerm); // Track for review
 
-    termDisplay.textContent = currentTerm.term;
+    // Display level-specific hint
+    if (levelHint) {
+        if (currentLevel === 2 || currentLevel === 3) {
+            levelHint.textContent = '💡 文章を読んでタイピングしてください';
+        } else {
+            levelHint.textContent = '';
+        }
+    }
 
-    // Get reading from data (hiragana) - use 'reading' field, fallback to 'roman' for compatibility
-    const reading = currentTerm.reading || currentTerm.roman || '';
+    // Use question_text for display, fallback to term for compatibility
+    termDisplay.textContent = currentTerm.question_text || currentTerm.term;
+
+    // Get reading from correct_answer (hiragana) - fallback to reading/roman for compatibility
+    const reading = currentTerm.correct_answer || currentTerm.reading || currentTerm.roman || '';
     readingDisplay.textContent = reading; // Show hiragana reading
 
     // Generate typing state from hiragana
@@ -389,20 +404,23 @@ function renderKeyStats(container, keys, isBest) {
 
 function generateReviewList() {
     reviewList.innerHTML = '';
-    // Use completedQuestions instead of usedTerms
-    const uniqueCompletedTerms = [...new Set(completedQuestions)];
+    // Use usedTerms to show all attempted questions
+    const uniqueAttemptedTerms = [...new Set(usedTerms)];
 
-    if (uniqueCompletedTerms.length === 0) {
-        reviewList.innerHTML = '<li class="review-item" style="color: #64748b; text-align: center;">完了した問題はありません</li>';
+    if (uniqueAttemptedTerms.length === 0) {
+        reviewList.innerHTML = '<li class="review-item" style="color: #64748b; text-align: center;">出題された問題はありません</li>';
         return;
     }
 
-    uniqueCompletedTerms.forEach(term => {
+    uniqueAttemptedTerms.forEach(term => {
         const li = document.createElement('li');
         li.className = 'review-item';
+        // Use new schema fields (question_text, correct_answer), fallback to old fields for compatibility
+        const questionText = term.question_text || term.term || '';
+        const answer = term.correct_answer || term.reading || term.roman || '';
         li.innerHTML = `
-            <div class="review-term">${term.term}</div>
-            <div class="review-meaning">${term.explanation}</div>
+            <div class="review-term">${questionText}</div>
+            <div class="review-meaning">${answer}</div>
         `;
         reviewList.appendChild(li);
     });

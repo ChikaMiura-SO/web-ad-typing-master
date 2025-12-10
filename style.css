@@ -22,11 +22,12 @@ body {
     font-family: var(--font-main);
     background-color: var(--bg-color);
     color: var(--text-color);
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     position: relative;
 }
 
@@ -47,7 +48,7 @@ body {
 .container {
     width: 100%;
     max-width: 800px;
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,8 +66,15 @@ body {
     justify-content: center;
     transition: opacity 0.5s ease, transform 0.5s ease;
     position: absolute;
-    max-height: 100vh;
-    /* Ensure screens don't overflow viewport height */
+}
+
+/* Result Screen - allow scrolling */
+#result-screen {
+    position: relative;
+    min-height: auto;
+    max-height: none;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
 
 .screen.hidden {
@@ -217,18 +225,29 @@ body {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(10px);
-    padding: 3rem;
+    padding: 2rem;
     border-radius: 20px;
     width: 100%;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.level-hint {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    min-height: 1.2rem;
 }
 
 .term-display {
     font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.2;
 }
 
 .term-reading {
@@ -242,6 +261,9 @@ body {
     font-size: 2rem;
     letter-spacing: 0.1em;
     color: #64748b;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    line-height: 1.6;
 }
 
 .char-correct {
@@ -421,14 +443,10 @@ body {
 
 .review-section {
     width: 100%;
-    flex: 1;
-    overflow-y: auto;
     background: var(--glass-bg);
     border-radius: 15px;
     padding: 1.5rem;
     border: 1px solid var(--glass-border);
-    min-height: 0;
-    /* Important for flex child scrolling */
 }
 
 .review-section h3 {

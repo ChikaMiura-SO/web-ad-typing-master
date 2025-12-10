@@ -8,8 +8,7 @@ const ProblemForm = ({ initialData, onSuccess, onCancel }) => {
         level_id: '1',
         question_id: '',
         question_text: '',
-        correct_answer: '',
-        explanation: ''
+        correct_answer: ''
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -27,7 +26,7 @@ const ProblemForm = ({ initialData, onSuccess, onCancel }) => {
 
     const validate = () => {
         if (!formData.course_id || !formData.level_id || !formData.question_id || !formData.question_text || !formData.correct_answer) {
-            return "All fields except explanation are required.";
+            return "All fields are required.";
         }
         if (formData.question_text.includes('http://') || formData.question_text.includes('https://')) {
             return "External links are not allowed in the question text.";
@@ -142,15 +141,7 @@ const ProblemForm = ({ initialData, onSuccess, onCancel }) => {
                     />
                 </div>
 
-                <div>
-                    <label>Explanation</label>
-                    <textarea
-                        name="explanation"
-                        value={formData.explanation}
-                        onChange={handleChange}
-                        rows="3"
-                    />
-                </div>
+
 
                 <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                     <button type="submit" className="btn btn-primary" disabled={loading}>
