@@ -15,6 +15,7 @@ let usedTerms = []; // To track terms used in the current session for the result
 let completedQuestions = []; // Track successfully completed questions
 let keyStats = {}; // { 'a': { correct: 0, miss: 0 }, ... }
 let currentLevel = 1; // Track selected level for UI hints
+let totalTime = 60; // Total time for the current game (used for progress bar)
 
 // DOM Elements
 // DOM Elements
@@ -112,7 +113,9 @@ function selectCategory(category) {
 // Functions
 function initGame() {
     score = 0;
-    timeLeft = 60;
+    // 中級・上級は3分（180秒）、初級は1分（60秒）
+    totalTime = (currentLevel >= 2) ? 120 : 60;
+    timeLeft = totalTime;
     isPlaying = false;
     usedTerms = [];
     completedQuestions = [];
@@ -195,7 +198,7 @@ function startTimer() {
         timerDisplay.textContent = timeLeft;
 
         // Update progress bar
-        const progressPercentage = (timeLeft / 60) * 100;
+        const progressPercentage = (timeLeft / totalTime) * 100;
         timeProgressBar.style.width = `${progressPercentage}%`;
 
         if (timeLeft <= 5) {
@@ -212,9 +215,9 @@ function startTimer() {
 
 function nextTerm() {
     if (currentTermIndex >= currentQuestions.length) {
-        // Reshuffle if we run out of terms
-        shuffleArray(currentQuestions);
-        currentTermIndex = 0;
+        // すべての問題をクリアしたらゲーム終了
+        endGame();
+        return;
     }
 
     const currentTerm = currentQuestions[currentTermIndex];
